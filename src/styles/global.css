@@ -1,141 +1,264 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
+/* === 字体 === */
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+	--font-sans:
+			-apple-system, BlinkMacSystemFont, "Segoe UI",
+			"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+			sans-serif;
+	--font-mono:
+			"JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+	/* === 配色 === */
+	--bg: #fafaf7;
+	--text: #1a1a1a;
+	--text-muted: #888;
+	--text-subtle: #b5b5b5;
+	--border: #e8e6e0;
+	--border-hover: #d0cec8;
+	--link: #1a1a1a;
+	--code-bg: #f0eee8;
+
+	/* === 尺寸 === */
+	--content-width: 680px;
+	--radius: 4px;
 }
-body {
-	font-family: var(--font-atkinson);
+
+/* === 重置 === */
+* {
 	margin: 0;
 	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 17px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font-family: var(--font-sans);
+	background: var(--bg);
+	color: var(--text);
 	line-height: 1.7;
+	font-weight: 400;
+	margin: 0;
+	padding: 0;
 }
+
+/* === 布局容器 === */
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
+	max-width: var(--content-width);
+	margin: 0 auto;
+	padding: 48px 24px 120px;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
+
+/* === 顶部导航 === */
+header {
+	max-width: var(--content-width);
+	margin: 0 auto;
+	padding: 32px 24px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
-h1 {
-	font-size: 3.052em;
+
+header a.site-title {
+	font-size: 1rem;
+	font-weight: 500;
+	text-decoration: none;
+	color: var(--text);
 }
-h2 {
-	font-size: 2.441em;
+
+header nav {
+	display: flex;
+	gap: 24px;
 }
-h3 {
-	font-size: 1.953em;
+
+header nav a {
+	font-size: 0.9rem;
+	color: var(--text-muted);
+	text-decoration: none;
 }
-h4 {
-	font-size: 1.563em;
+
+header nav a:hover,
+header nav a.active {
+	color: var(--text);
 }
-h5 {
-	font-size: 1.25em;
+
+/* === 首页文章卡片列表 === */
+ul.post-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
-strong,
-b {
-	font-weight: 700;
+
+ul.post-list li {
+	margin: 0;
 }
-a {
-	color: var(--accent);
+
+a.post-card {
+	display: block;
+	padding: 28px 0;
+	border-bottom: 1px solid var(--border);
+	text-decoration: none;
+	color: var(--text);
+	transition: padding-left 0.2s ease;
 }
-a:hover {
-	color: var(--accent);
+
+a.post-card:hover {
+	padding-left: 8px;
 }
-p {
-	margin-bottom: 1em;
+
+ul.post-list li:first-child a.post-card {
+	border-top: 1px solid var(--border);
 }
-.prose p {
-	margin-bottom: 2em;
+
+a.post-card .date {
+	font-size: 0.82rem;
+	color: var(--text-subtle);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.02em;
 }
-textarea {
-	width: 100%;
-	font-size: 16px;
+
+a.post-card .title {
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin-top: 8px;
+	line-height: 1.4;
 }
-input {
-	font-size: 16px;
+
+a.post-card .desc {
+	font-size: 0.95rem;
+	color: var(--text-muted);
+	margin-top: 8px;
+	line-height: 1.6;
 }
-table {
-	width: 100%;
+
+/* === 文章正文 === */
+article {
+	margin-top: 24px;
 }
-img {
+
+article .post-meta {
+	font-size: 0.85rem;
+	color: var(--text-subtle);
+	margin-bottom: 32px;
+}
+
+article h1 {
+	font-size: 1.8rem;
+	font-weight: 600;
+	line-height: 1.3;
+	margin-bottom: 16px;
+	letter-spacing: -0.01em;
+}
+
+article h2 {
+	font-size: 1.3rem;
+	font-weight: 600;
+	margin-top: 56px;
+	margin-bottom: 16px;
+	line-height: 1.4;
+}
+
+article h3 {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin-top: 40px;
+	margin-bottom: 12px;
+}
+
+article p {
+	margin-bottom: 20px;
+}
+
+article a {
+	color: var(--link);
+	text-decoration: underline;
+	text-decoration-color: var(--border-hover);
+	text-underline-offset: 3px;
+	transition: text-decoration-color 0.15s;
+}
+
+article a:hover {
+	text-decoration-color: var(--text);
+}
+
+article ul, article ol {
+	margin-bottom: 20px;
+	padding-left: 24px;
+}
+
+article li {
+	margin-bottom: 8px;
+}
+
+article blockquote {
+	border-left: 2px solid var(--border-hover);
+	padding-left: 20px;
+	margin: 24px 0;
+	color: var(--text-muted);
+	font-style: italic;
+}
+
+article code {
+	background: var(--code-bg);
+	padding: 2px 6px;
+	border-radius: 3px;
+	font-family: var(--font-mono);
+	font-size: 0.9em;
+}
+
+article pre {
+	background: var(--code-bg);
+	padding: 20px;
+	border-radius: var(--radius);
+	overflow-x: auto;
+	margin: 24px 0;
+	font-size: 0.88rem;
+	line-height: 1.6;
+}
+
+article pre code {
+	background: none;
+	padding: 0;
+}
+
+article hr {
+	border: none;
+	border-top: 1px solid var(--border);
+	margin: 48px 0;
+}
+
+article img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+	border-radius: var(--radius);
+	margin: 24px 0;
 }
 
-.sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+/* === 底部 === */
+footer {
+	max-width: var(--content-width);
+	margin: 0 auto;
+	padding: 48px 24px;
+	font-size: 0.85rem;
+	color: var(--text-subtle);
+	text-align: center;
+}
+
+/* === 响应式 === */
+@media (max-width: 720px) {
+	html {
+		font-size: 16px;
+	}
+	main {
+		padding: 32px 20px 80px;
+	}
+	header {
+		padding: 24px 20px 0;
+	}
+	article h1 {
+		font-size: 1.5rem;
+	}
 }
